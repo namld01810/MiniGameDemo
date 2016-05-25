@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="13F1077" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="LeagueTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="France" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lil-Mk-Ad8">
+                        <rect key="frame" x="70" y="11" width="167" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="Kpk-fG-u2F"/>
+                            <constraint firstAttribute="width" constant="167" id="tqU-3E-2y1"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="France.png" translatesAutoresizingMaskIntoConstraints="NO" id="36s-BQ-ecl">
+                        <rect key="frame" x="22" y="12" width="40" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="MX7-Fs-C1L"/>
+                            <constraint firstAttribute="width" constant="40" id="Pgn-Mu-g0p"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="36s-BQ-ecl" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="WqF-6z-3Ui"/>
+                    <constraint firstItem="36s-BQ-ecl" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="22" id="X8B-Kw-pso"/>
+                    <constraint firstItem="lil-Mk-Ad8" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="lbh-Zb-PMK"/>
+                    <constraint firstItem="lil-Mk-Ad8" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="70" id="qIq-St-4Aa"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="flagImg" destination="36s-BQ-ecl" id="7r7-D8-P5S"/>
+                <outlet property="nameLabel" destination="lil-Mk-Ad8" id="khW-Nh-iBi"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="France.png" width="235" height="154"/>
+    </resources>
+</document>

@@ -1,0 +1,27 @@
+
+/* Class = "IBUILabel"; text = "LIVE SCORE"; ObjectID = "Ued-fZ-NsC"; */
+"Ued-fZ-NsC.text" = "LIVE SCORE";
+
+/* Class = "IBUILabel"; text = "DANH SÁCH CHỨC NĂNG"; ObjectID = "XBi-PE-lC5"; */
+"XBi-PE-lC5.text" = "MENU";
+
+/* Class = "IBUILabel"; text = "YÊU THÍCH"; ObjectID = "daT-AD-LvC"; */
+"daT-AD-LvC.text" = "FAVOURITE";
+
+/* Class = "IBUILabel"; text = "  Copyright (c) 2014 PTECH. All rights reserved."; ObjectID = "hQv-de-jXP"; */
+"hQv-de-jXP.text" = "  Copyright (c) 2014 PTECH. All rights reserved.";
+
+/* Class = "IBUILabel"; text = "THIẾT LẬP"; ObjectID = "mQH-ej-x1B"; */
+"mQH-ej-x1B.text" = "SETTINGS";
+
+/* Class = "IBUILabel"; text = "BẢNG XẾP HẠNG"; ObjectID = "oU8-Su-K3e"; */
+"oU8-Su-K3e.text" = "TABLES";
+
+/* Class = "IBUILabel"; text = "BẢNG XẾP HẠNG"; ObjectID = "r8f-h7-ICv"; */
+"r8f-h7-ICv.text" = "TABLES";
+
+/* Class = "IBUILabel"; text = "QUỐC GIA"; ObjectID = "tdo-F8-IqN"; */
+"tdo-F8-IqN.text" = "NATIONS";
+
+/* Class = "IBUILabel"; text = "Cancel"; ObjectID = "vBE-Mr-bV5"; */
+"vBE-Mr-bV5.text" = "Home";

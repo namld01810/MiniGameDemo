@@ -1,0 +1,32 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "7db314c9-a759-b04a-b1d8-e5a5edefab0c++6314",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "7db314c9-a759-b04a-b1d8-e5a5edefab0c++6314" : {
+
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "7db314c9-a759-b04a-b1d8-e5a5edefab0c++6314" : 0,
+    "d47346a3-bd4f-ee4f-8849-53936dc0e458" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "79C6089B-8618-417B-8DAE-94B9AF1EA537",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "7db314c9-a759-b04a-b1d8-e5a5edefab0c++6314" : "BDLive",
+    "d47346a3-bd4f-ee4f-8849-53936dc0e458" : "zappcards"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "BDLive",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "BDLive.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/117.103.192.91\/svn\/LiveScore007",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "7db314c9-a759-b04a-b1d8-e5a5edefab0c++6314"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/192.168.1.85:8888\/svn\/zappcards",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "d47346a3-bd4f-ee4f-8849-53936dc0e458"
+    }
+  ]
+}

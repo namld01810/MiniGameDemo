@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="13F1077" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="FqV-Ke-GmI" customClass="LineupTableHeaderSection">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rhi-Kx-GF9" userLabel="BGView">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_coach.png" translatesAutoresizingMaskIntoConstraints="NO" id="sBb-Xy-mQK">
+                    <rect key="frame" x="10" y="21" width="22" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="22" id="9jy-X7-OyR"/>
+                        <constraint firstAttribute="height" constant="22" id="e50-kj-9gf"/>
+                    </constraints>
+                </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VWd-8H-UYH">
+                    <rect key="frame" x="37" y="0.0" width="1" height="64"/>
+                    <color key="backgroundColor" red="0.1960784314" green="0.43529411759999997" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="1" id="PYa-FB-sga"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gvl-j5-ZTS" userLabel="WhiteView">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="10"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="10" id="HZo-S0-nze"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Coach" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nhv-zS-euA">
+                    <rect key="frame" x="48" y="21" width="242" height="20.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N8c-ma-h1D" userLabel="WhiteView">
+                    <rect key="frame" x="0.0" y="54" width="320" height="10"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="10" id="2m9-xQ-qZI"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="rhi-Kx-GF9" secondAttribute="trailing" id="18n-SI-noG"/>
+                <constraint firstItem="VWd-8H-UYH" firstAttribute="top" secondItem="FqV-Ke-GmI" secondAttribute="top" id="34t-cL-c6E"/>
+                <constraint firstItem="Nhv-zS-euA" firstAttribute="leading" secondItem="VWd-8H-UYH" secondAttribute="trailing" constant="10" id="5H0-5T-Dbn"/>
+                <constraint firstItem="gvl-j5-ZTS" firstAttribute="leading" secondItem="FqV-Ke-GmI" secondAttribute="leading" id="7T9-hZ-CzO"/>
+                <constraint firstAttribute="bottom" secondItem="VWd-8H-UYH" secondAttribute="bottom" id="AaT-7Y-T7s"/>
+                <constraint firstAttribute="trailing" secondItem="gvl-j5-ZTS" secondAttribute="trailing" id="EG9-Bf-sDk"/>
+                <constraint firstAttribute="bottom" secondItem="N8c-ma-h1D" secondAttribute="bottom" id="IPg-fq-hJO"/>
+                <constraint firstItem="sBb-Xy-mQK" firstAttribute="leading" secondItem="FqV-Ke-GmI" secondAttribute="leading" constant="10" id="MK0-Ru-bR8"/>
+                <constraint firstAttribute="trailing" secondItem="N8c-ma-h1D" secondAttribute="trailing" id="Q0a-QE-269"/>
+                <constraint firstItem="VWd-8H-UYH" firstAttribute="leading" secondItem="sBb-Xy-mQK" secondAttribute="trailing" constant="5" id="UdI-3D-n3s"/>
+                <constraint firstItem="N8c-ma-h1D" firstAttribute="leading" secondItem="FqV-Ke-GmI" secondAttribute="leading" id="VXO-S2-a2e"/>
+                <constraint firstItem="rhi-Kx-GF9" firstAttribute="leading" secondItem="FqV-Ke-GmI" secondAttribute="leading" id="XhR-rH-rYB"/>
+                <constraint firstItem="rhi-Kx-GF9" firstAttribute="top" secondItem="FqV-Ke-GmI" secondAttribute="top" id="frp-Lw-uaR"/>
+                <constraint firstAttribute="centerY" secondItem="sBb-Xy-mQK" secondAttribute="centerY" id="gfr-GY-bdm"/>
+                <constraint firstAttribute="centerY" secondItem="Nhv-zS-euA" secondAttribute="centerY" id="jLN-rY-PQo"/>
+                <constraint firstAttribute="bottom" secondItem="rhi-Kx-GF9" secondAttribute="bottom" id="r6o-pc-f1L"/>
+                <constraint firstItem="gvl-j5-ZTS" firstAttribute="top" secondItem="FqV-Ke-GmI" secondAttribute="top" id="wvY-st-eHg"/>
+                <constraint firstAttribute="trailing" secondItem="Nhv-zS-euA" secondAttribute="trailing" constant="30" id="ytL-aI-Mj2"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="bgView" destination="rhi-Kx-GF9" id="p6H-fC-YyF"/>
+                <outlet property="headerImage" destination="sBb-Xy-mQK" id="3Lx-Nf-9EQ"/>
+                <outlet property="headerTitle" destination="Nhv-zS-euA" id="xYI-8p-qoD"/>
+            </connections>
+            <point key="canvasLocation" x="139" y="268"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="ic_coach.png" width="44" height="44"/>
+    </resources>
+</document>

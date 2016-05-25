@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>79C6089B-8618-417B-8DAE-94B9AF1EA537</string>
+	<key>IDESourceControlProjectName</key>
+	<string>BDLive</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>7db314c9-a759-b04a-b1d8-e5a5edefab0c++6314</key>
+		<string>https://117.103.192.91/svn/LiveScore007/iOS/BDLive</string>
+		<key>d47346a3-bd4f-ee4f-8849-53936dc0e458</key>
+		<string>http://192.168.1.85:8888/svn/zappcards</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>BDLive.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>7db314c9-a759-b04a-b1d8-e5a5edefab0c++6314</key>
+		<string>../..</string>
+		<key>d47346a3-bd4f-ee4f-8849-53936dc0e458</key>
+		<string>../../../../zappcards</string>
+	</dict>
+	<key>IDESourceControlProjectRepositoryRootDictionary</key>
+	<dict>
+		<key>7db314c9-a759-b04a-b1d8-e5a5edefab0c++6314</key>
+		<string>https://117.103.192.91/svn/LiveScore007</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://117.103.192.91/svn/LiveScore007/iOS/BDLive/BDLive.xcodeproj</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>7db314c9-a759-b04a-b1d8-e5a5edefab0c++6314</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.subversion</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>7db314c9-a759-b04a-b1d8-e5a5edefab0c++6314</string>
+			<key>IDESourceControlWCCName</key>
+			<string>BDLive</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.subversion</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>d47346a3-bd4f-ee4f-8849-53936dc0e458</string>
+			<key>IDESourceControlWCCName</key>
+			<string>zappcards</string>
+		</dict>
+	</array>
+</dict>
+</plist>

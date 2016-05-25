@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash_bg-667h.png" translatesAutoresizingMaskIntoConstraints="NO" id="2Fc-xr-yxj">
+                    <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_splash.png" translatesAutoresizingMaskIntoConstraints="NO" id="xST-am-8VG">
+                    <rect key="frame" x="180" y="180" width="120" height="120"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="120" id="bJ9-9j-2wA"/>
+                        <constraint firstAttribute="width" constant="120" id="gaC-k3-AyT"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Copyright (c) 2014 PTECH. All rights reserved." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="8ie-xW-0ye">
+                    <rect key="frame" x="20" y="409" width="441" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="0.45882352939999999" green="0.65098039220000004" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="8ie-xW-0ye" secondAttribute="bottom" constant="50" id="6sZ-CG-Cs4"/>
+                <constraint firstItem="2Fc-xr-yxj" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="AJS-DY-fLG"/>
+                <constraint firstAttribute="centerY" secondItem="xST-am-8VG" secondAttribute="centerY" id="Adr-SS-z6s"/>
+                <constraint firstAttribute="centerX" secondItem="xST-am-8VG" secondAttribute="centerX" id="J2m-Jy-1hj"/>
+                <constraint firstItem="8ie-xW-0ye" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" symbolic="YES" id="MfP-vx-nX0"/>
+                <constraint firstItem="2Fc-xr-yxj" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="OEW-nQ-RDA"/>
+                <constraint firstAttribute="centerX" secondItem="8ie-xW-0ye" secondAttribute="centerX" id="ZEH-qu-HZ9"/>
+                <constraint firstAttribute="bottom" secondItem="2Fc-xr-yxj" secondAttribute="bottom" id="bPD-qb-V5e"/>
+                <constraint firstItem="2Fc-xr-yxj" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="bfS-x9-AW5"/>
+                <constraint firstAttribute="trailing" secondItem="2Fc-xr-yxj" secondAttribute="trailing" id="cyg-m5-O7R"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="bfS-x9-AW5"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="548" y="455"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="icon_splash.png" width="114" height="114"/>
+        <image name="splash_bg-667h.png" width="375" height="667"/>
+    </resources>
+</document>

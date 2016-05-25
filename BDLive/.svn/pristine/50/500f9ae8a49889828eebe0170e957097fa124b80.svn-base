@@ -1,0 +1,1404 @@
+//
+//  LiveBDController.m
+//  BDLive
+//
+//  Created by Khanh Le on 12/16/14.
+//  Copyright (c) 2014 Khanh Le. All rights reserved.
+//
+
+#import "LiveBDController.h"
+#import "xs_common_inc.h"
+#import "../SOAPHandler/SOAPHandler.h"
+#import "../SOAPHandler/PresetSOAPMessage.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+#import "BDLiveGestureRecognizer.h"
+#import "LiveScoreHeaderSection.h"
+#import "LiveScoreTableViewCell.h"
+#import "DetailMatchController.h"
+#import "StatsViewController.h"
+#import "../Models/LivescoreModel.h"
+#import "../Models/BxhTeamModel.h"
+#import "../Models/CupModel.h"
+#import "Perform/PViewController.h"
+#import "ExpertReview.h"
+#import "GamePredictorViewController.h"
+#import "LiveScoreViewController.h"
+#import "DAPagesContainer.h"
+#import "TableViewController.h"
+#import "GroupScrollView.h"
+#import "Cup/GroupHeader.h"
+#import "BxhView.h"
+#import "../Models/AccInfo.h"
+#import "BxhTableViewCell.h"
+#import "../AdNetwork/AdNetwork.h"
+
+
+static NSString* nib_LivescoreCell = @"nib_LivescoreCell";
+
+static const int VONG_BANG = 1;
+static const int VONG_1_16 = 2;
+static const int VONG_1_8 = 3;
+static const int VONG_1_4 = 4;
+static const int VONG_1_2 = 5;
+
+
+@interface LiveBDController () <SOAPHandlerDelegate, UITableViewDataSource, UITableViewDelegate, DAPagesContainerTopBarDelegate, GroupHeaderDelegate, GADBannerViewDelegate>
+
+@property(nonatomic, strong) NSMutableArray* datasource;
+@property(nonatomic, strong) NSMutableArray* cupList;
+
+@property(nonatomic, strong) NSString* sBangActive;
+@property(nonatomic, strong) NSString* sDanhSachBang;
+
+
+@property(nonatomic, strong) NSString* sBangActive_Cup;
+
+@property(nonatomic, strong) NSMutableDictionary* lichDict;
+
+@property(nonatomic, strong) NSMutableDictionary* cupBxhDict;
+@property(nonatomic, strong) NSMutableArray* cupBxhKeyList;
+
+
+
+@property(nonatomic, strong) NSMutableDictionary* groupDict;
+
+@property(nonatomic, strong) SOAPHandler *soapHandler;
+
+@property(nonatomic, strong) IBOutlet UITableView *tableView;
+
+@property(nonatomic, strong) IBOutlet UIImageView *backImg;
+@property(nonatomic, strong) IBOutlet UIImageView *loadingImg;
+@property(nonatomic, strong) IBOutlet UIActivityIndicatorView *loadingIndicator;
+
+@property(nonatomic, weak) IBOutlet UIView *lichView;
+@property (strong, nonatomic) DAPagesContainer *pagesContainer;
+
+@property(nonatomic, strong) IBOutlet UILabel *sTenGiaiLabel;
+
+
+@end
+
+@implementation LiveBDController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    
+    if(self) {
+        self.soapHandler = [[SOAPHandler alloc] init];
+        self.soapHandler.delegate = self;
+        self.datasource = [NSMutableArray new];
+        self.selectedDateIndex = 2;
+        self.lichDict = [NSMutableDictionary new];
+        self.groupDict = [NSMutableDictionary new];
+        self.cupList = @[].mutableCopy;
+        self.sDanhSachBang = nil;
+        
+        self.cupBxhDict = [NSMutableDictionary new];
+        self.cupBxhKeyList = [NSMutableArray new];
+        
+        self.sBangActive = @"C";
+        self.sBangActive_Cup = @"C";
+        
+        
+        
+    }
+    
+    return self;
+}
+
+-(void)setupFixtureView {
+    self.pagesContainer = [[DAPagesContainer alloc] init];
+    self.pagesContainer.delegate = self;
+    [self.pagesContainer willMoveToParentViewController:self];
+    self.pagesContainer.view.frame = [UIScreen mainScreen].bounds;
+    self.pagesContainer.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    [self.lichView addSubview:self.pagesContainer.view];
+    
+    self.pagesContainer.selectedPageItemTitleColor = [UIColor greenColor];
+    [self.pagesContainer didMoveToParentViewController:self];
+    self.pagesContainer.topBarHeight = 27.f;
+    
+    
+    
+    NSDate* now = [NSDate date];
+    NSString* dateFormat = @"d/M";
+    TableViewController *con1 = [[TableViewController alloc] initWithNibName:@"TableViewController" bundle:nil];
+    con1.itemImageNamed = @"ic_lich_dau.png";
+    con1.title = [XSUtils getDateByGivenDateInterval:now dateFormat:dateFormat dateInterval:-2];
+    
+    TableViewController *con2 = [[TableViewController alloc] initWithNibName:@"TableViewController" bundle:nil];
+    con2.itemImageNamed = @"ic_lich_dau.png";
+    con2.title = [XSUtils getDateByGivenDateInterval:now dateFormat:dateFormat dateInterval:-1];
+    
+    TableViewController *con3 = [[TableViewController alloc] initWithNibName:@"TableViewController" bundle:nil];
+    con3.itemImageNamed = @"ic_lich_dau.png";
+    con3.title = [XSUtils getDateByGivenDateInterval:now dateFormat:dateFormat dateInterval:0];
+    
+    
+    TableViewController *con4 = [[TableViewController alloc] initWithNibName:@"TableViewController" bundle:nil];
+    con4.itemImageNamed = @"ic_lich_dau.png";
+    con4.title = [XSUtils getDateByGivenDateInterval:now dateFormat:dateFormat dateInterval:1];
+    TableViewController *con5 = [[TableViewController alloc] initWithNibName:@"TableViewController" bundle:nil];
+    con5.itemImageNamed = @"ic_lich_dau.png";
+    con5.title = [XSUtils getDateByGivenDateInterval:now dateFormat:dateFormat dateInterval:2];
+    
+    
+    if(self.bGiaiCup) {
+        self.pagesContainer.imageViews = @[@"ic_vongloai.png", @"ic_vongloai.png", @"ic_tuket.png", @"ic_banket.png", @"ic_chungket.png"];
+        con1.title = [NSString stringWithFormat:@"%@", NSLocalizedString(@"bCup-group-round-txt", @"Group")];
+        con2.title = [NSString stringWithFormat:@"%@", NSLocalizedString(@"bCup-knockout-round-txt", @"Knock out")];
+        con3.title = [NSString stringWithFormat:@"%@", NSLocalizedString(@"bCup-quater-round-txt", @"Quater")];
+        con4.title = [NSString stringWithFormat:@"%@", NSLocalizedString(@"bCup-semi-round-txt", @"Semi Final")];
+        con5.title = [NSString stringWithFormat:@"%@", NSLocalizedString(@"bCup-final-round-txt", @"Final")];
+    } else {
+        self.pagesContainer.imageViews = @[@"ic_lich_dau.png", @"ic_lich_dau.png", @"ic_lich_dau.png", @"ic_lich_dau.png", @"ic_lich_dau.png"];
+    }
+    
+    self.pagesContainer.viewControllers = @[con1, con2, con3, con4, con5];
+    self.pagesContainer.selectedIndex = 2;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view from its nib.
+    self.loadingImg.hidden = YES;
+    self.backImg.userInteractionEnabled = YES;
+    
+    
+    // setup nib files
+    UINib *livescoreCell = [UINib nibWithNibName:@"LiveScoreTableViewCell" bundle:nil];
+    [self.tableView registerNib:livescoreCell forCellReuseIdentifier:nib_LivescoreCell];
+    
+    [self.tableView registerNib:[UINib nibWithNibName:@"LiveScoreHeaderSection" bundle:nil] forHeaderFooterViewReuseIdentifier:@"LiveScoreHeaderSection"];
+    
+    
+    [self.tableView registerNib:[UINib nibWithNibName:@"GroupHeader" bundle:nil] forHeaderFooterViewReuseIdentifier:@"GroupHeader"];
+    
+    
+
+    UINib *bxhCell = [UINib nibWithNibName:@"BxhTableViewCell" bundle:nil];
+    [self.tableView registerNib:bxhCell forCellReuseIdentifier:@"BxhTableViewCell"];
+    
+    // end setup nib files
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onBackClick:)];
+    tap.numberOfTapsRequired = 1;
+    
+    [self.backImg addGestureRecognizer:tap];
+    
+    
+    UITapGestureRecognizer *tap2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onReloadClick:)];
+    tap.numberOfTapsRequired = 1;
+    self.loadingImg.userInteractionEnabled = YES;
+    [self.loadingImg addGestureRecognizer:tap2];
+    
+    [XSUtils setFontFamily:@"VNF-FUTURA" forView:self.view andSubViews:YES];
+    UITapGestureRecognizer *tapGesture =
+    [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onHomeSiteClick:)];
+    [XSUtils setTableFooter:self.tableView tap:tapGesture];
+    
+    
+    self.sTenGiaiLabel.text = self.sTenGiai;
+    
+
+    [self setupFixtureView];
+    
+    
+    [[AdNetwork sharedInstance] createAdMobBannerView:self admobDelegate:self tableView:self.tableView];
+
+    
+}
+
+-(void)onHomeSiteClick:(id)sender {
+    NSString *livescoreLink = @"http://livescore007.com/";
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:livescoreLink]];
+}
+
+-(void)onReloadClick:(id)sender
+{
+    if (!self.bGiaiCup) {
+        self.loadingImg.hidden = YES;
+        self.loadingIndicator.hidden = NO;
+        [self.loadingIndicator startAnimating];
+        [self fetchListLeageLiveByCountry:[NSString stringWithFormat:@"%lu", self.iID_MaGiai]];
+    }
+    
+}
+
+-(void)onBackClick:(id)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    
+    if (self.pagesContainer.selectedIndex == 0 && self.bGiaiCup) {
+        return 3;
+    }
+
+    if(self.datasource.count > 0) {
+        return 1;
+    }
+    
+    return 0;
+    
+    
+    
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (self.pagesContainer.selectedIndex == 0 && section == 2 && self.bGiaiCup) {
+        return 61.0f;
+    }
+    return 27.0f;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.pagesContainer.selectedIndex == 0 && indexPath.section == 2 && self.bGiaiCup) {
+        return 25.0f;
+    }
+    return 96.0f;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (self.pagesContainer.selectedIndex == 0 && section == 0&& self.bGiaiCup) {
+        return 0;
+    } else if (self.pagesContainer.selectedIndex == 0 && section == 2 && self.bGiaiCup) {
+        NSArray* list = [self.cupBxhDict objectForKey:self.sBangActive];
+        
+        if (list) {
+            return list.count;
+        }
+        
+        
+        return 0;
+    }
+    
+    return self.datasource.count;
+}
+
+
+-(UIView *)createBxhViewForHeaderInSection {
+    BxhView *view = [[[NSBundle mainBundle] loadNibNamed:@"BxhViewHeaderSection" owner:nil options:nil] objectAtIndex:0];
+    
+    view.leagueLabel.hidden = YES;
+    view.leagueLogo.hidden = YES;
+    view.cupHeaderTitle.hidden = NO;
+    view.backgroundColor = [UIColor colorWithRed:(24/255.f) green:(27/255.f) blue:(34/255.f) alpha:1.0f];
+    
+    
+    NSString* cupTitle = [NSString stringWithFormat:@"Group %@", self.sBangActive];
+    
+    
+    
+    view.cupHeaderTitle.text = cupTitle;
+    
+    
+    
+    return view;
+}
+
+-(UIView *)createGroupViewForHeaderInSection {
+    
+    GroupHeader *view = [self.tableView  dequeueReusableHeaderFooterViewWithIdentifier:@"GroupHeader"];
+    view.scrollView.frame = CGRectMake(0, 1, [UIScreen mainScreen].bounds.size.width, 26);
+    view.delegate = self;
+    
+    view.itemViews = @[@"A",@"B",@"C",@"D",@"E",@"F",@"G",@"H"];
+    
+    if (self.sDanhSachBang) {
+        view.itemViews = [self.sDanhSachBang componentsSeparatedByString:@","];
+    }
+    
+    
+    [view createGroupLabels];
+    
+    [view setSelectedLabel:self.sBangActive];
+    
+    return view;
+}
+
+-(void)onGroupSelected:(int)selectedIndex title:(NSString*)title groupHeader:(GroupHeader*)groupHeader {
+    [groupHeader setSelectedLabel:title];
+    self.sBangActive = title;
+    
+    
+
+    NSMutableArray *ret = [self.groupDict objectForKey:title];
+    
+    if(ret) {
+        [self.datasource removeAllObjects];
+        [self.datasource addObjectsFromArray:ret];
+        [self.tableView reloadData];
+    } else {
+        [self fetch_wsFootBall_GetLichThiDau_TheoBang:self.iID_MaGiai sBang:title];
+    }
+    
+
+    
+    
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    
+    if (self.pagesContainer.selectedIndex == 0 && section == 0 && self.bGiaiCup) {
+        
+        return [self createGroupViewForHeaderInSection];
+    } else if (self.pagesContainer.selectedIndex == 0 && section == 2 && self.bGiaiCup) {
+        
+        return [self createBxhViewForHeaderInSection];
+    }
+    
+    
+    
+    LiveScoreHeaderSection *view = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:@"LiveScoreHeaderSection"];
+    
+    
+    
+    
+    @try {
+        //
+        [self.datasource objectAtIndex:0];
+    }
+    @catch (NSException *exception) {
+        //
+        int x = 122;
+    }
+    LivescoreModel *model = [self.datasource objectAtIndex:0];
+    
+    
+    view.aliasLabel.text = model.sTenGiai;
+    
+    
+    
+    
+    
+    BDLiveGestureRecognizer* tap = [[BDLiveGestureRecognizer alloc] initWithTarget:self action:@selector(onBxhTap:)];
+    tap.sTenGiai = view.aliasLabel.text;
+    tap.iID_MaTran = [NSString stringWithFormat:@"%lu", model.iID_MaTran];
+    tap.numberOfTapsRequired = 1;
+    tap.logoGiaiUrl = model.sLogoGiai;
+    view.bxhView.userInteractionEnabled = YES;
+    [view.bxhView addGestureRecognizer:tap];
+    
+    if(model!= nil) {
+        
+        [[SDWebImageManager sharedManager] downloadWithURL:[NSURL URLWithString:model.sLogoGiai]
+                              options:0
+                             progress:^(NSInteger receivedSize, NSInteger expectedSize)
+         {
+             // progression tracking code
+         }
+                            completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished)
+         {
+             if (image)
+             {
+                 
+                 [XSUtils adjustUIImageView:view.countryFlag image:image];
+                 [view.countryFlag setImage:image];
+                 
+             }
+         }];
+    }
+    
+    
+    return view;
+    
+    
+}
+
+
+
+- (UITableViewCell *) createBxhTableViewCell:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    BxhTableViewCell* cell = [self.tableView dequeueReusableCellWithIdentifier:@"BxhTableViewCell"];
+    
+    BxhTeamModel *model = nil;
+    NSString* key = self.sBangActive;
+    NSMutableArray* list = [self.cupBxhDict objectForKey:key];
+    model = [list objectAtIndex:(indexPath.row - 0)];
+    
+    
+    [cell passValue:@[model.sViTri, model.sTenDoi, model.sDiem, model.sSoTranDau, model.sSoTranThang, model.sSoTranHoa, model.sSoTranThua, model.sBanThang, model.sBanThua, model.sHeSo]];
+    
+    if(indexPath.row%2 == 1) {
+        cell.contentView.backgroundColor = [UIColor colorWithRed:(222/255.f) green:(233/255.f) blue:(251/255.f) alpha:1.0f];
+    } else {
+        cell.contentView.backgroundColor = [UIColor whiteColor];
+    }
+    
+    
+    return cell;
+}
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    if (self.pagesContainer.selectedIndex == 0 && indexPath.section == 2 && self.bGiaiCup) {
+        return [self createBxhTableViewCell:tableView cellForRowAtIndexPath:indexPath];
+    }
+    
+    
+    LiveScoreTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:nib_LivescoreCell];
+    [cell resetViewState];
+    
+    
+    
+   
+    
+    LivescoreModel *model = [self.datasource objectAtIndex:indexPath.row];
+    cell.matchModel = model;
+    BDSwipeGestureRecognizer *swipeGesture = [[BDSwipeGestureRecognizer alloc]initWithTarget:self action:@selector(onCellSwipeGestureFired:)];
+    swipeGesture.indexPath = indexPath;
+    [cell addGestureRecognizer:swipeGesture];
+    
+    
+    // add event
+    [cell.performanceInfo addTarget:self action:@selector(onPerformClick:) forControlEvents:UIControlEventTouchUpInside];
+    cell.performanceInfo.model = model;
+    
+    [cell.compPredictor addTarget:self action:@selector(onComputerClick:) forControlEvents:UIControlEventTouchUpInside];
+    cell.compPredictor.model = model;
+    
+    [cell.expertPredictor addTarget:self action:@selector(onExpertClick:) forControlEvents:UIControlEventTouchUpInside];
+    cell.expertPredictor.model = model;
+    
+    
+    // game du doan
+    [cell.setbetButton addTarget:self action:@selector(onMoneyBagClick:) forControlEvents:UIControlEventTouchUpInside];
+    cell.setbetButton.model = model;
+    if (model.bGameDuDoan) {
+        cell.setbetButton.hidden = NO;
+    }
+    
+    [cell.favouriteBtn addTarget:self action:@selector(onFavouriteClick:) forControlEvents:UIControlEventTouchUpInside];
+    cell.favouriteBtn.model = model;
+    
+    
+    // render data now
+    [self renderLivescoreDataForCell:cell model:model];
+    
+    return cell;
+}
+
+-(void)onFavouriteClick:(BDButton*)sender {
+    LivescoreModel *model = sender.model;
+    model.isFavourite = !model.isFavourite;
+    int favo = 0;
+    NSString* matran = [NSString stringWithFormat:@"%lu", model.iID_MaTran];
+    
+    if (model.isFavourite) {
+        [sender setBackgroundImage:[UIImage imageNamed:@"heart_fill.png"] forState:UIControlStateNormal];
+        favo = 1;
+        [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:matran];
+    } else {
+        [sender setBackgroundImage:[UIImage imageNamed:@"heart_hidden.png"] forState:UIControlStateNormal];
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:matran];
+    }
+    
+    
+    // get device token
+    NSString* deviceToken = (NSString*)[[NSUserDefaults standardUserDefaults] objectForKey:DEVICE_TOKEN_KEY];
+    if(deviceToken!=nil) {
+        [self submitFavouriteMatch:deviceToken matran:matran type:favo];
+    }
+    
+}
+
+
+-(void)onCellSwipeGestureFired:(BDSwipeGestureRecognizer *)gesture
+{
+    LiveScoreTableViewCell* cell = (LiveScoreTableViewCell*)[self.tableView cellForRowAtIndexPath:gesture.indexPath];
+    
+    
+    LivescoreModel* model = ((LivescoreModel*)cell.matchModel);
+    NSString* matran = [NSString stringWithFormat:@"%lu", ((LivescoreModel*)cell.matchModel).iID_MaTran];
+    if (gesture.direction == UISwipeGestureRecognizerDirectionRight)
+    {
+        // mark as favourite
+        int favo = model.isFavourite ? 0 : 1;
+        
+        
+        [[NSUserDefaults standardUserDefaults]
+         setObject:[NSNumber numberWithInt:favo] forKey:matran];
+        
+        
+        
+        
+        if(favo != 1) {
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:matran];
+        }
+        
+        // get device token
+        NSString* deviceToken = (NSString*)[[NSUserDefaults standardUserDefaults] objectForKey:DEVICE_TOKEN_KEY];
+        if(deviceToken!=nil) {
+            [self submitFavouriteMatch:deviceToken matran:matran type:favo];
+        }
+        
+        ((LivescoreModel*)cell.matchModel).isFavourite = (favo==1 ? YES : NO);
+        
+        
+        CATransition *animation = [CATransition animation];
+        animation.type = kCATransitionFromLeft;
+        animation.duration = 0.7;
+        [cell.favouriteBtn.layer addAnimation:animation forKey:nil];
+        
+        
+        cell.favouriteBtn.hidden = (favo==1 ? NO : YES);
+        if (!cell.favouriteBtn.hidden) {
+            [cell.favouriteBtn setBackgroundImage:[UIImage imageNamed:@"heart_fill.png"] forState:UIControlStateNormal];
+        } else {
+            cell.favouriteBtn.hidden = NO;
+            [cell.favouriteBtn setBackgroundImage:[UIImage imageNamed:@"heart_hidden.png"] forState:UIControlStateNormal];
+        }
+    }
+    
+    
+}
+
+-(void)submitFavouriteMatch:(NSString*)deviceToken matran:(NSString*)matran type:(int)type
+{
+    dispatch_queue_t myQueue = dispatch_queue_create("com.ptech.BDLive.Submit", NULL);
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), myQueue, ^{
+        
+        SOAPHandler* handler = [SOAPHandler new];
+        [handler sendAutoSOAPRequest:[PresetSOAPMessage getDeviceLikeSoapMessage:deviceToken matran:matran
+                                                                            type:type] soapAction:[PresetSOAPMessage getDeviceLikeSoapAction]];
+    });
+    
+}
+
+-(void)onCellSwipeGestureFired333:(BDSwipeGestureRecognizer *)gesture
+{
+    LiveScoreTableViewCell* cell = (LiveScoreTableViewCell*)[self.tableView cellForRowAtIndexPath:gesture.indexPath];
+    
+    
+    LivescoreModel* model = ((LivescoreModel*)cell.matchModel);
+    NSString* matran = [NSString stringWithFormat:@"%lu", ((LivescoreModel*)cell.matchModel).iID_MaTran];
+    if (gesture.direction == UISwipeGestureRecognizerDirectionRight)
+    {
+        // mark as favourite
+        int favo = model.isFavourite ? 0 : 1;
+        
+        
+        [[NSUserDefaults standardUserDefaults]
+         setObject:[NSNumber numberWithInt:favo] forKey:matran];
+        
+        ((LivescoreModel*)cell.matchModel).isFavourite = (favo==1 ? YES : NO);
+        
+        
+        CATransition *animation = [CATransition animation];
+        animation.type = kCATransitionFromLeft;
+        animation.duration = 0.7;
+        [cell.favouriteBtn.layer addAnimation:animation forKey:nil];
+        
+        
+        cell.favouriteBtn.hidden = (favo==1 ? NO : YES);
+        if (!cell.favouriteBtn.hidden) {
+            [cell.favouriteBtn setBackgroundImage:[UIImage imageNamed:@"heart_fill.png"] forState:UIControlStateNormal];
+        } else {
+            cell.favouriteBtn.hidden = NO;
+            [cell.favouriteBtn setBackgroundImage:[UIImage imageNamed:@"heart_hidden.png"] forState:UIControlStateNormal];
+        }
+    }
+    
+    
+}
+
+-(void)onPerformClick:(BDButton*)sender
+{
+    LivescoreModel *model = sender.model;
+    PViewController *p = [[PViewController alloc] initWithNibName:@"PViewController" bundle:nil];
+    p.p_type = 0; // phong do
+    p.model = model;
+//    [self presentViewController:p animated:YES completion:nil];
+    [self.navigationController pushViewController:p animated:YES];
+    
+}
+-(void)onComputerClick:(BDButton*)sender
+{
+    LivescoreModel *model = sender.model;
+    PViewController *p = [[PViewController alloc] initWithNibName:@"PViewController" bundle:nil];
+    p.p_type = 1; // may tinh du doan
+    p.model = model;
+//    [self presentViewController:p animated:YES completion:nil];
+    [self.navigationController pushViewController:p animated:YES];
+    
+}
+
+-(void)onMoneyBagClick:(BDButton*)sender
+{
+    
+    LivescoreModel *model = sender.model;
+    GamePredictorViewController *game = [[GamePredictorViewController alloc] initWithNibName:@"GamePredictorViewController" bundle:nil];
+    game.selectedModel = model;
+    [self.navigationController pushViewController:game animated:YES];
+    
+}
+
+-(void)onExpertClick:(BDButton*)sender
+{
+    LivescoreModel *model = sender.model;
+    ExpertReview* exp = [[ExpertReview alloc] initWithNibName:@"ExpertReview" bundle:nil];
+    exp.model = model;
+    [self.navigationController pushViewController:exp animated:YES];
+    
+}
+
+-(void)renderLivescoreDataForCell:(LiveScoreTableViewCell*)cell model:(LivescoreModel*)model
+{
+    [LiveScoreViewController updateLiveScoreTableViewCell:cell model:model];
+    
+    cell.iID_MaTran = model.iID_MaTran;
+    
+    cell.matchTimeLabel.text = [XSUtils toDayOfWeek:model.dThoiGianThiDau];
+    
+    cell.keoLabel.text = [model get_sTyLe_ChapBong:model.sTyLe_ChapBong];
+    cell.xLabel.text = model.sTyLe_ChauAu_Live;
+    cell.uoLabel.text = model.sTyLe_TaiSuu_Live;
+    
+    //Trạng thái trận đấu: <=1:Chưa đá; 2,4: Đang đá; 3: HT; 5,8,9,15: FT; 6: Bù giờ; 7,14: Pens; 11: Hoãn;  12: CXĐ; 13: Dừng; 16: W.O
+    if(model.iTrangThai == 2 || model.iTrangThai == 4 || model.iTrangThai == 3)  {
+        // live
+        [cell animateFlashLive];
+        cell.liveLabel.hidden = NO;
+        if(model.iTrangThai == 3) {
+            cell.liveLabel.text = @"Live";
+            cell.fullTimeLabel.text = @"HT";
+            
+        } else {
+            cell.fullTimeLabel.text = [NSString stringWithFormat:@"%lu'",model.iCN_Phut];
+        }
+        
+        //FT
+        NSString* resultFT = [NSString stringWithFormat:@"%lu - %lu", (unsigned long)model.iCN_BanThang_DoiNha_FT, (unsigned long)model.iCN_BanThang_DoiKhach_FT];
+        NSString* resultHT = [NSString stringWithFormat:@"HT %lu - %lu", (unsigned long)model.iCN_BanThang_DoiNha_HT, (unsigned long)model.iCN_BanThang_DoiKhach_HT];
+        
+        cell.finishRetLabel.text = resultFT;
+        cell.halfTimeLabel.text = resultHT;
+    } else if(model.iTrangThai <= 1) {
+        // chua da
+        cell.clockImg.hidden = NO;
+        cell.fullTimeLabel.text = model.sThoiGian;
+        cell.halfTimeLabel.hidden = YES;
+        cell.finishRetLabel.hidden = YES;
+    } else if(model.iTrangThai == 5 || model.iTrangThai == 8 ||
+              model.iTrangThai == 9 || model.iTrangThai == 15){
+        //FT
+        NSString* resultFT = @"";
+        if (model.iTrangThai == 8 || model.iTrangThai == 9) {
+            resultFT = [NSString stringWithFormat:@"%lu - %lu", model.iCN_BanThang_DoiNha_ET, model.iCN_BanThang_DoiKhach_ET];
+            cell.fullTimeLabel.text = @"AET";
+        } else {
+            resultFT = [NSString stringWithFormat:@"%lu - %lu", model.iCN_BanThang_DoiNha_FT, model.iCN_BanThang_DoiKhach_FT];
+        }
+        NSString* resultHT = [NSString stringWithFormat:@"HT %lu - %lu", (unsigned long)model.iCN_BanThang_DoiNha_HT, (unsigned long)model.iCN_BanThang_DoiKhach_HT];
+        
+        cell.finishRetLabel.text = resultFT;
+        cell.halfTimeLabel.text = resultHT;
+    } else if(model.iTrangThai == 6) {
+        // extra time
+        cell.fullTimeLabel.text = [NSString stringWithFormat:@"90' + %lu'",model.iPhutThem];
+    }else if(model.iTrangThai == 7 || model.iTrangThai == 14) {
+        // extra time
+        cell.fullTimeLabel.text = @"Pens";
+    } else if(model.iTrangThai == 11) {
+        // extra time
+        NSString* localizedTxt = [NSString stringWithFormat:@"%@", NSLocalizedString(@"livescore-post-txt", @"Hoãn")];
+
+        cell.fullTimeLabel.text = localizedTxt;
+        //khanh add
+        cell.clockImg.hidden = NO;
+        cell.halfTimeLabel.hidden = YES;
+        cell.finishRetLabel.hidden = YES;
+    } else if(model.iTrangThai == 12 || model.iTrangThai == 99) {
+        // extra time
+        cell.fullTimeLabel.text = @"CXĐ";
+        //khanh add
+        cell.clockImg.hidden = NO;
+        cell.halfTimeLabel.hidden = YES;
+        cell.finishRetLabel.hidden = YES;
+    } else if(model.iTrangThai == 13) {
+        // extra time
+        cell.fullTimeLabel.text = @"Dừng";
+        //khanh add
+        cell.clockImg.hidden = NO;
+        cell.halfTimeLabel.hidden = YES;
+        cell.finishRetLabel.hidden = YES;
+    }else if(model.iTrangThai == 16) {
+        // extra time
+        cell.fullTimeLabel.text = @"W.O";
+        //khanh add
+        cell.clockImg.hidden = NO;
+        cell.halfTimeLabel.hidden = YES;
+        cell.finishRetLabel.hidden = YES;
+    }
+    
+    if(model.bNhanDinhChuyenGia) {
+        cell.expertPredictor.hidden = NO;
+    }
+    if(model.bMayTinhDuDoan) {
+        cell.compPredictor.hidden = NO;
+    }
+    
+    if(model.isFavourite) {
+        cell.favouriteBtn.hidden = NO;
+        [cell.favouriteBtn setBackgroundImage:[UIImage imageNamed:@"heart_fill.png"] forState:UIControlStateNormal];
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    
+    
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    //iID_MaTran
+    
+    LiveScoreTableViewCell *cell = (LiveScoreTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
+    LivescoreModel* model = cell.matchModel;
+    
+    
+    DetailMatchController *detail = [[DetailMatchController alloc] initWithNibName:@"DetailMatchController" bundle:nil];
+    detail.iID_MaTran = model.iID_MaTran;
+    detail.matchModel = model;
+    [detail fetchMatchDetailById];
+    
+    [self.navigationController pushViewController:detail animated:YES];
+}
+
+-(void)onBxhTap:(BDLiveGestureRecognizer*) sender
+{
+    
+    NSString* sTenGiai = sender.sTenGiai;
+    NSString* iID_MaTran = sender.iID_MaTran;
+    NSString* logoGiaiUrl = sender.logoGiaiUrl;
+    
+    ZLog(@"retreiving data for bxh: %@", sTenGiai);
+    
+    LivescoreModel* model = [self.datasource objectAtIndex:0];
+    if(model != nil) {
+        NSString* iID_MaGiai = [NSString stringWithFormat:@"%lu", model.iID_MaGiai];
+        [self fetchBxhByID:iID_MaGiai sTenGiai:sTenGiai logoGiaiUrl:logoGiaiUrl];
+    }
+    
+    
+}
+
+-(void) fetchBxhByID:(NSString*)iID_MaGiai sTenGiai:(NSString*)sTenGiai logoGiaiUrl:(NSString*)logoGiaiUrl
+{
+    ZLog(@"iID_MaGiai: %@", iID_MaGiai);
+    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    StatsViewController* bxh = [storyboard instantiateViewControllerWithIdentifier:@"StatsViewController"];
+    bxh.iID_MaGiai = iID_MaGiai;
+    bxh.nameBxh = sTenGiai;
+    bxh.logoBxh = logoGiaiUrl;
+    
+    [bxh fetchBxhListById];
+    [self.navigationController pushViewController:bxh animated:YES];
+}
+
+
+
+
+-(void) fetchListLeageLiveByCountry:(NSString*)iID_MaGiai {
+    
+    
+    
+    NSInteger offset = [[NSTimeZone defaultTimeZone] secondsFromGMTForDate: [NSDate date]];
+    NSTimeZone *timeZone = [NSTimeZone timeZoneForSecondsFromGMT: offset];
+
+    NSString* timeZoneName = [timeZone name];
+    timeZoneName = [timeZoneName stringByReplacingOccurrencesOfString:@"GMT" withString:@""];
+    
+
+
+    int timeZoneNameInt = [timeZoneName intValue];
+
+    int hh = (abs(timeZoneNameInt) / 100) * (timeZoneNameInt/timeZoneNameInt);
+    int mm = (abs(timeZoneNameInt) % 100) * (timeZoneNameInt/timeZoneNameInt);
+
+    
+    
+    int dateInterval = (int)(self.selectedDateIndex - 2);
+    long currentTime = [[XSUtils getDateByGivenDateInterval:[NSDate date] dateInterval:dateInterval] timeIntervalSince1970];
+    
+    dispatch_queue_t myQueue = dispatch_queue_create("com.ptech.iID_MaQuocGia", NULL);
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), myQueue, ^{
+        
+        [self.soapHandler sendSOAPRequest:[PresetSOAPMessage get_wsFootBall_GetLichThiDau_TheoNgay_SoapMessage:iID_MaGiai datetimelocal:[NSString stringWithFormat:@"%lu", currentTime] HH:[NSString stringWithFormat:@"%d", hh] MM:[NSString stringWithFormat:@"%d", mm]] soapAction:[PresetSOAPMessage get_wsFootBall_GetLichThiDau_TheoNgay_SoapAction]];
+        
+    });
+}
+
+
+-(void)onSoapError:(NSError *)error
+{
+    ZLog(@"soap error: %@", error);
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.loadingImg.hidden = NO;
+        self.loadingIndicator.hidden = YES;
+        [self.loadingIndicator stopAnimating];
+        NSString* localizeMsg = [NSString stringWithFormat:@"     %@", NSLocalizedString(@"alert-load-data-error.text", @"Lỗi tải dữ liệu")];
+        
+        NSString* localize_message = [NSString stringWithFormat:@"     %@", NSLocalizedString(@"alert-network-error.text", kBDLive_OnLoadDataError_Message)];
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:localizeMsg message:localize_message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];        [alert show];
+        
+    });
+}
+-(void)onSoapDidFinishLoading:(NSData *)data
+{
+    @try {
+        NSString* xmlData = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        
+        
+        if ([xmlData rangeOfString:@"<wsFootBall_VongDauResult>"].location != NSNotFound) {
+            // user info
+            [self handle_wsFootBall_VongDauResult:xmlData];
+            return;
+        } else if ([xmlData rangeOfString:@"<wsFootBall_GetLichThiDau_TheoBangResult>"].location != NSNotFound) {
+            // user info
+            [self handle_wsFootBall_GetLichThiDau_TheoBangResult:xmlData];
+            return;
+            
+        }else if ([xmlData rangeOfString:@"<wsFootBall_BangXepHangResult>"].location != NSNotFound) {
+            // user info
+            [self handle_wsFootBall_BangXepHangResult:xmlData];
+            return;
+            
+        }
+        
+        
+        NSString* jsonStr = [[xmlData componentsSeparatedByString:@"<wsFootBall_GetLichThiDau_TheoNgayResult>"] objectAtIndex:1];
+        jsonStr = [[jsonStr componentsSeparatedByString:@"</wsFootBall_GetLichThiDau_TheoNgayResult>"] objectAtIndex:0];
+        
+        ZLog(@"jsonStr data: %@", jsonStr);//NhanDinhChuyenGiaController
+        
+        
+        // parse data
+        NSData* dataJson = [jsonStr dataUsingEncoding:NSUTF8StringEncoding];
+        NSError* error = nil;
+        
+        NSArray *bdDict = [NSJSONSerialization JSONObjectWithData:dataJson options:NSJSONReadingMutableContainers error:&error];
+        
+        if(error) {
+            ZLog(@"error occured: %@", error);
+            return;
+        } else {
+            
+            [self.datasource removeAllObjects]; // remove all objects
+            long currentTime = [[NSDate date] timeIntervalSince1970];
+            
+            
+            for(int i=0;i<bdDict.count;++i) {
+                NSDictionary* dict = [bdDict objectAtIndex:i];
+                LivescoreModel* model = [self createLiveScoreModelByDict:dict currentTime:currentTime];
+                
+                
+                [self.datasource addObject:model];
+                
+            }
+            
+            
+            
+            
+            // update data on Main UI thread
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                self.loadingImg.hidden = NO;
+                self.loadingIndicator.hidden = YES;
+                [self.loadingIndicator stopAnimating];
+                
+                
+                [self.tableView reloadData];
+                
+                
+              
+                
+                [self.lichDict setValue:[NSMutableArray arrayWithArray:self.datasource] forKey:[NSString stringWithFormat:@"%lu", self.selectedDateIndex]];
+            });
+            
+            
+            
+        }
+    }@catch(NSException *ex) {
+        
+        [self onSoapError:nil];
+    }
+    
+}
+
+- (void)itemAtIndex:(NSUInteger)index didSelectInPagesContainerTopBar:(id)sender {
+    ZLog(@"index selected: %lu", index);
+    
+    
+    if(self.bGiaiCup) {
+        if (YES || self.pagesContainer.selectedIndex != index) {
+            NSString* sBangActive = self.sBangActive;
+            if (index == 0) {
+                
+            } else if (index == VONG_1_16-1) {
+                sBangActive = @"116";
+            }else if (index == VONG_1_8-1) {
+                sBangActive = @"18";
+            }else if (index == VONG_1_4-1) {
+                sBangActive = @"14";
+            }else if (index == VONG_1_2-1) {
+                sBangActive = @"12";
+            }
+            
+            if (![sBangActive isEqualToString:self.sBangActive_Cup]) {
+                self.sBangActive_Cup = sBangActive;
+                
+                NSMutableArray *ret = nil;
+                if (self.pagesContainer.selectedIndex == 0) {
+                    ret = [self.groupDict objectForKey:self.sBangActive];
+                } else {
+                    ret = [self.lichDict objectForKey:self.sBangActive_Cup];
+                }
+                
+                
+                if(ret) {
+                    [self.datasource removeAllObjects];
+                    [self.datasource addObjectsFromArray:ret];
+                    [self.tableView reloadData];
+                } else {
+                    [self fetch_wsFootBall_GetLichThiDau_TheoBang:self.iID_MaGiai sBang:self.sBangActive_Cup];
+                }
+                
+                
+            }
+            
+            
+            
+        }
+    } else {
+        if (self.selectedDateIndex == index) {
+            return;
+        }
+        
+        
+        self.selectedDateIndex = index;
+        NSMutableArray *ret = [self.lichDict objectForKey:[NSString stringWithFormat:@"%lu", self.selectedDateIndex]];
+        
+        if(ret) {
+            [self.datasource removeAllObjects];
+            [self.datasource addObjectsFromArray:ret];
+            [self.tableView reloadData];
+        } else {
+            [self onReloadClick:nil];
+        }
+    }
+    
+    
+
+    
+    
+}
+
+
+-(void)fetch_wsFootBall_VongDau {
+    dispatch_queue_t myQueue = dispatch_queue_create("com.ptech.bxh", NULL);
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), myQueue, ^{
+        
+        [self.soapHandler sendSOAPRequest:[PresetSOAPMessage get_wsFootBall_VongDau_SoapMessage:self.iID_MaGiai] soapAction:[PresetSOAPMessage get_wsFootBall_VongDau_SoapAction]];
+    });
+
+}
+
+
+
+
+
+-(void)handle_wsFootBall_GetLichThiDau_TheoBangResult:(NSString*)xmlData {
+    
+    @try {
+        NSString* jsonStr = [[xmlData componentsSeparatedByString:@"<wsFootBall_GetLichThiDau_TheoBangResult>"] objectAtIndex:1];
+        jsonStr = [[jsonStr componentsSeparatedByString:@"</wsFootBall_GetLichThiDau_TheoBangResult>"] objectAtIndex:0];
+        
+        
+        // parse data
+        NSData* dataJson = [jsonStr dataUsingEncoding:NSUTF8StringEncoding];
+        NSError* error = nil;
+        
+        NSArray *bdDict = [NSJSONSerialization JSONObjectWithData:dataJson options:NSJSONReadingMutableContainers error:&error];
+        
+        if(error) {
+            ZLog(@"error occured: %@", error);
+            return;
+        } else {
+            
+            [self.datasource removeAllObjects]; // remove all objects
+            long currentTime = [[NSDate date] timeIntervalSince1970];
+            
+            
+            for(int i=0;i<bdDict.count;++i) {
+                NSDictionary* dict = [bdDict objectAtIndex:i];
+                LivescoreModel* model = [self createLiveScoreModelByDict:dict currentTime:currentTime];
+                
+                
+                [self.datasource addObject:model];
+                
+            }
+            
+            
+            
+            
+            
+            // update data on Main UI thread
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                self.loadingImg.hidden = NO;
+                self.loadingIndicator.hidden = YES;
+                [self.loadingIndicator stopAnimating];
+                
+                
+                
+                
+                
+                if (self.pagesContainer.selectedIndex == 0) {
+                    [self.groupDict setValue:[NSMutableArray arrayWithArray:self.datasource] forKey:self.sBangActive];
+                } else {
+                    [self.lichDict setValue:[NSMutableArray arrayWithArray:self.datasource] forKey:self.sBangActive_Cup];
+                }
+                
+                
+                [self.tableView reloadData];
+                
+                
+            });
+            
+        }
+        
+    }
+    @catch (NSException *exception) {
+        
+    }
+}
+
+
+-(void)handle_wsFootBall_VongDauResult:(NSString*)xmlData {
+    @try {
+        NSString* jsonStr = [[xmlData componentsSeparatedByString:@"<wsFootBall_VongDauResult>"] objectAtIndex:1];
+        jsonStr = [[jsonStr componentsSeparatedByString:@"</wsFootBall_VongDauResult>"] objectAtIndex:0];
+        
+        
+        // parse data
+        NSData* dataJson = [jsonStr dataUsingEncoding:NSUTF8StringEncoding];
+        NSError* error = nil;
+        
+        NSArray *bdDict = [NSJSONSerialization JSONObjectWithData:dataJson options:NSJSONReadingMutableContainers error:&error];
+        
+        if(error) {
+            ZLog(@"error occured: %@", error);
+            return;
+        } else {
+            
+            int activeRound = 2;
+            NSString* sBangActive = @"A";
+            
+            [self.cupList removeAllObjects];
+            for(int i=0;i<bdDict.count;++i) {
+                NSDictionary* dict = [bdDict objectAtIndex:i];
+                CupModel* model = [CupModel new];
+                model.bCoLich = [[dict objectForKey:@"bCoLich"] boolValue];
+                model.bVongActive = [[dict objectForKey:@"bVongActive"] boolValue];
+                model.iID_MaGiai = [(NSNumber*)[dict objectForKey:@"iID_MaGiai"] intValue];
+                model.iSTT = [(NSNumber*)[dict objectForKey:@"iSTT"] intValue];
+                
+                model.sDanhSachBang = [dict objectForKey:@"sDanhSachBang"];
+                
+                if (model.sDanhSachBang && model.sDanhSachBang.length > 1 && self.sDanhSachBang == nil) {
+                    self.sDanhSachBang = model.sDanhSachBang;
+                }
+                
+                
+                model.sTen_en = [dict objectForKey:@"sTen_en"];
+                model.sTen = [dict objectForKey:@"sTen"];
+                
+                if (model.iSTT == VONG_BANG) {
+                    sBangActive = [dict objectForKey:@"sBangActive"];
+                }
+                
+                
+                if (model.bVongActive) {
+                    activeRound = model.iSTT;
+                }
+                
+                
+                [self.cupList addObject:model];
+                
+            }
+            
+            
+            self.sBangActive = sBangActive;
+            
+            [self.cupList sortUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"iSTT" ascending:YES]]];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.pagesContainer.selectedIndex = (activeRound-1);
+            });
+            
+            
+            if (activeRound == VONG_BANG) {
+                
+            } else if (activeRound == VONG_1_16) {
+                sBangActive = @"116";
+            }else if (activeRound == VONG_1_8) {
+                sBangActive = @"18";
+            }else if (activeRound == VONG_1_4) {
+                sBangActive = @"14";
+            }else if (activeRound == VONG_1_2) {
+                sBangActive = @"12";
+            }
+            
+            
+            self.sBangActive_Cup = sBangActive;
+            
+            [self fetch_wsFootBall_GetLichThiDau_TheoBang:self.iID_MaGiai sBang:sBangActive];
+            
+
+        }
+        
+    }
+    @catch (NSException *exception) {
+        
+    }
+}
+
+-(void)fetch_wsFootBall_GetLichThiDau_TheoBang:(int)MaGiai sBang:(NSString*)sBang {
+    dispatch_queue_t myQueue = dispatch_queue_create("com.ptech.bxh", NULL);
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), myQueue, ^{
+        
+        [self.soapHandler sendSOAPRequest:[PresetSOAPMessage get_wsFootBall_GetLichThiDau_TheoBang_SoapMessage:MaGiai sBang:sBang] soapAction:[PresetSOAPMessage get_wsFootBall_GetLichThiDau_TheoBang_SoapAction]];
+    });
+}
+
+
+-(LivescoreModel*)createLiveScoreModelByDict:(NSDictionary*) dict currentTime:(long)currentTime{
+    LivescoreModel *model = [LivescoreModel new];
+    
+    
+    NSString* matchTime = [dict objectForKey:@"dThoiGianThiDau"];
+    matchTime = [matchTime stringByReplacingOccurrencesOfString:@"/Date(" withString:@""];
+    matchTime = [matchTime stringByReplacingOccurrencesOfString:@")/" withString:@""];
+    NSUInteger dateLong =[matchTime integerValue]/1000;
+    dateLong = [(NSNumber*)[dict objectForKey:@"iC0"] longValue];
+    model.iC0 = dateLong;
+    model.iC1 = [(NSNumber*)[dict objectForKey:@"iC1"] longValue];
+    model.iC2 = [(NSNumber*)[dict objectForKey:@"iC2"] longValue];
+    model.iSoPhut1Hiep = [(NSNumber*)[dict objectForKey:@"iSoPhut1Hiep"] longValue];
+    
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:dateLong];
+    model.dThoiGianThiDau = date;
+    
+    
+    
+    NSDateFormatter *dateFormatter=[[NSDateFormatter alloc]init];
+    [dateFormatter setDateFormat:@"HH:mm"];
+    
+    //pens
+    model.iCN_BanThang_DoiNha_Pen = [(NSNumber*)[dict objectForKey:@"iCN_BanThang_DoiNha_Pen"] integerValue];
+    model.iCN_BanThang_DoiKhach_Pen = [(NSNumber*)[dict objectForKey:@"iCN_BanThang_DoiKhach_Pen"] integerValue];
+    
+    
+    
+    model.sThoiGian = [dict objectForKey:@"sThoiGian"];
+    model.sThoiGian = [dateFormatter stringFromDate:date];
+    
+    
+    model.sTenDoiNha = [dict objectForKey:@"sTenDoiNha"];
+    model.sTenDoiKhach = [dict objectForKey:@"sTenDoiKhach"];
+    model.sTenGiai = [dict objectForKey:@"sTenGiai"];
+    model.sLogoQuocGia = [dict objectForKey:@"sLogoQuocGia"];
+    model.sLogoDoiNha = [dict objectForKey:@"sLogoDoiNha"];
+    model.sLogoDoiKhach = [dict objectForKey:@"sLogoDoiKhach"];
+    model.sLogoGiai = [dict objectForKey:@"sLogoGiai"];
+    model.iID_MaGiai = [(NSNumber*)[dict objectForKey:@"iID_MaGiai"] integerValue];
+    model.iTrangThai = [(NSNumber*)[dict objectForKey:@"iTrangThai"] intValue];
+    
+    //iID_MaDoiNha, iID_MaDoiKhach
+    model.iID_MaDoiNha = [(NSNumber*)[dict objectForKey:@"iID_MaDoiNha"] integerValue];
+    model.iID_MaDoiKhach = [(NSNumber*)[dict objectForKey:@"iID_MaDoiKhach"] integerValue];
+    
+    
+    model.sDoiNha_BXH = [dict objectForKey:@"sDoiNha_BXH"];
+    model.sDoiKhach_BXH = [dict objectForKey:@"sDoiKhach_BXH"];
+    
+    
+    // may tinh du doan va nhan dinh chuyen gia
+    model.bMayTinhDuDoan = NO;
+    model.bNhanDinhChuyenGia = NO;
+    model.bNhanDinhChuyenGia = [[dict objectForKey:@"bNhanDinhChuyenGia"] boolValue];
+    model.bMayTinhDuDoan = [[dict objectForKey:@"bMayTinhDuDoan"] boolValue];
+    
+    model.bGameDuDoan = [[dict objectForKey:@"bGameDuDoan"] boolValue];
+    
+    // keo game du doan
+    model.sTyLe_ChapBong = [dict objectForKey:@"sTyLe_ChapBong"];
+    
+    model.sTyLe_ChauAu = [dict objectForKey:@"sTyLe_ChauAu"];
+    model.sTyLe_TaiSuu = [dict objectForKey:@"sTyLe_TaiSuu"];
+    
+    
+    if (model.iTrangThai == 5 ||
+        model.iTrangThai == 8 ||
+        model.iTrangThai == 9 ||
+        model.iTrangThai == 15) {
+        
+        model.sTyLe_ChapBong = [dict objectForKey:@"sTyLe_ChapBong_DauTran"];
+        model.sTyLe_ChauAu = [dict objectForKey:@"sTyLe_ChauAu_DauTran"];
+        model.sTyLe_TaiSuu = [dict objectForKey:@"sTyLe_TaiSuu_DauTran"];
+    }
+    
+    model.sTyLe_ChauAu_Live = [model get_sTyLe_ChapBong_ChauAu_Live:model.sTyLe_ChauAu];
+    model.sTyLe_TaiSuu_Live = [model get_sTyLe_ChapBong_TaiSuu_Live:model.sTyLe_TaiSuu];
+    // end keo ty le
+    
+    
+    model.iCN_Phut = [(NSNumber*)[dict objectForKey:@"iCN_Phut"] integerValue];
+    model.iPhutThem = [(NSNumber*)[dict objectForKey:@"iPhutThem"] integerValue];
+    
+    
+    model.iCN_BanThang_DoiKhach_HT = [(NSNumber*)[dict objectForKey:@"iCN_BanThang_DoiKhach_HT"] integerValue];
+    model.iCN_BanThang_DoiNha_HT = [(NSNumber*)[dict objectForKey:@"iCN_BanThang_DoiNha_HT"] integerValue];
+    model.iCN_BanThang_DoiNha_FT = [(NSNumber*)[dict objectForKey:@"iCN_BanThang_DoiNha_FT"] integerValue];
+    model.iCN_BanThang_DoiKhach_FT = [(NSNumber*)[dict objectForKey:@"iCN_BanThang_DoiKhach_FT"] integerValue];
+    model.iID_MaTran = [(NSNumber*)[dict objectForKey:@"iID_MaTran"] integerValue];
+    
+    
+    model.iCN_BanThang_DoiNha_ET = [(NSNumber*)[dict objectForKey:@"iCN_BanThang_DoiNha_ET"] integerValue];
+    model.iCN_BanThang_DoiKhach_ET = [(NSNumber*)[dict objectForKey:@"iCN_BanThang_DoiKhach_ET"] integerValue];
+    
+    
+    [model adjustImageURLForReview];
+    
+    NSString* matran = [NSString stringWithFormat:@"%lu", model.iID_MaTran];
+    NSNumber *number = (NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:matran];
+    if(number != nil && [number intValue] == 1) {
+        model.isFavourite = YES;
+    } else {
+        model.isFavourite = NO;
+    }
+    
+    [LiveScoreViewController update_iCN_Phut_By_LivescoreModel:model c0:currentTime]; // update iCN_Phut by local time
+    
+    return model;
+}
+
+-(void) fetch_wsFootBall_BangXepHang
+{
+    dispatch_queue_t myQueue = dispatch_queue_create("com.ptech.bxh", NULL);
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), myQueue, ^{
+        
+        [self.soapHandler sendSOAPRequest:[PresetSOAPMessage getBxhSoapMessage:[NSString stringWithFormat:@"%ld", self.iID_MaGiai]] soapAction:[PresetSOAPMessage getBxhSoapAction]];
+    });
+    
+}
+
+
+-(void)handle_wsFootBall_BangXepHangResult:(NSString*)xmlData {
+    
+    @try {
+        
+        NSString* jsonStr = [[xmlData componentsSeparatedByString:@"<wsFootBall_BangXepHangResult>"] objectAtIndex:1];
+        jsonStr = [[jsonStr componentsSeparatedByString:@"</wsFootBall_BangXepHangResult>"] objectAtIndex:0];
+        
+        ZLog(@"jsonStr data: %@", jsonStr);
+        
+        
+        // parse data
+        NSData* dataJson = [jsonStr dataUsingEncoding:NSUTF8StringEncoding];
+        NSError* error = nil;
+        
+        NSArray *bdDict = [NSJSONSerialization JSONObjectWithData:dataJson options:NSJSONReadingMutableContainers error:&error];
+        
+        if(error) {
+            ZLog(@"error occured: %@", error);
+            return;
+        } else {
+            
+           
+            [self.cupBxhKeyList removeAllObjects];
+            [self.cupBxhDict removeAllObjects];
+            
+            for(int i=0;i<bdDict.count;++i) {
+                NSDictionary* dict = [bdDict objectAtIndex:i];
+                BxhTeamModel *model = [BxhTeamModel new];
+                model.sTenDoi = [dict objectForKey:@"sTenDoi"];
+                model.sViTri = [dict objectForKey:@"sViTri"];
+                model.sDiem = [dict objectForKey:@"sDiem"];
+                model.sSoTranDau = [dict objectForKey:@"sSoTranDau"];
+                model.sSoTranThang = [dict objectForKey:@"sSoTranThang"];
+                model.sSoTranHoa = [dict objectForKey:@"sSoTranHoa"];
+                model.sSoTranThua = [dict objectForKey:@"sSoTranThua"];
+                model.sBanThang = [dict objectForKey:@"sBanThang"];//37
+                model.sBanThua = [dict objectForKey:@"sBanThua"];//23
+                model.sHeSo = [dict objectForKey:@"sHeSo"];//14
+                model.sLast5Match = [dict objectForKey:@"sLast5Match"];
+                
+                
+                model.sTieuDeBXH = [dict objectForKey:@"sTieuDeBXH"];
+                model.iChiSoBXH = [(NSNumber*)[dict objectForKey:@"iChiSoBXH"] intValue];
+                
+                
+                if([model.sTieuDeBXH isEqualToString:@""]) {
+                    // ko phai dau cup
+                    
+                    
+                } else {
+                    // dau cup
+                    NSString* cupKey = [NSString stringWithFormat:@"%c", 'A' + model.iChiSoBXH];
+                    NSMutableArray* list = [self.cupBxhDict valueForKey:cupKey];
+                    if(list == nil) {
+                        list = [NSMutableArray new];
+                        [self.cupBxhDict setObject:list forKey:cupKey];
+                        [self.cupBxhKeyList addObject:cupKey];
+                    }
+                    [list addObject:model];
+                    
+                }
+                
+                
+                
+
+                
+            }
+            
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (self.pagesContainer.selectedIndex == 0) {
+//                    [self.tableView reloadData];
+                }
+            });
+            
+        }
+    }@catch(NSException *ex) {
+        
+
+    }
+}
+
+#pragma  Admob
+- (void)adViewDidReceiveAd:(GADBannerView *)view {
+
+    self.tableView.tableHeaderView = view;
+    
+}
+
+
+@end

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="LiveScoreHeaderSection">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="27"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="France.png" translatesAutoresizingMaskIntoConstraints="NO" id="TC1-dK-Ka5">
+                    <rect key="frame" x="5" y="3" width="33" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="33" id="Bao-lF-LhK"/>
+                        <constraint firstAttribute="height" constant="21" id="n2p-vl-4oH"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GER: Bundesliga" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mfK-Q6-2IG">
+                    <rect key="frame" x="44" y="3" width="186" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="F8D-8c-8yV"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nlk-c7-8k7" userLabel="PinView">
+                    <rect key="frame" x="240" y="0.0" width="40" height="27"/>
+                    <subviews>
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Qp-kX-c9q">
+                            <rect key="frame" x="10" y="4" width="20" height="19"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="19" id="Mbv-wA-gcz"/>
+                                <constraint firstAttribute="width" constant="20" id="hVJ-Ma-ek3"/>
+                            </constraints>
+                            <state key="normal" backgroundImage="ic_pin.png">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_pin.png" translatesAutoresizingMaskIntoConstraints="NO" id="Com-2H-NTJ">
+                            <rect key="frame" x="10" y="4" width="20" height="19"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="19" id="K5m-Gr-vVZ"/>
+                                <constraint firstAttribute="width" constant="20" id="h66-Sq-pNr"/>
+                            </constraints>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="centerX" secondItem="Com-2H-NTJ" secondAttribute="centerX" id="IEf-fz-IqX"/>
+                        <constraint firstAttribute="centerY" secondItem="1Qp-kX-c9q" secondAttribute="centerY" id="fdK-2z-udI"/>
+                        <constraint firstAttribute="width" constant="40" id="i7W-2J-17e"/>
+                        <constraint firstAttribute="centerY" secondItem="Com-2H-NTJ" secondAttribute="centerY" id="rWv-Q4-4yd"/>
+                        <constraint firstAttribute="centerX" secondItem="1Qp-kX-c9q" secondAttribute="centerX" id="ysE-jM-X8g"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="go3-1p-MRE" userLabel="BxhView">
+                    <rect key="frame" x="280" y="0.0" width="40" height="27"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="27" id="Fw0-aN-sv2"/>
+                        <constraint firstAttribute="width" constant="40" id="lDe-7W-969"/>
+                    </constraints>
+                </view>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="game-dudoan-Recovered_14.png" translatesAutoresizingMaskIntoConstraints="NO" id="Off-3d-qwz">
+                    <rect key="frame" x="285" y="3" width="20" height="19"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="19" id="G6G-kW-tFm"/>
+                        <constraint firstAttribute="width" constant="20" id="WZ1-ZG-8Vx"/>
+                    </constraints>
+                </imageView>
+            </subviews>
+            <color key="backgroundColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="Nlk-c7-8k7" secondAttribute="bottom" id="0qU-Vu-Kxw"/>
+                <constraint firstItem="go3-1p-MRE" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="0tP-RB-Uuk"/>
+                <constraint firstItem="mfK-Q6-2IG" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="3" id="2u0-Ok-ZaZ"/>
+                <constraint firstItem="Nlk-c7-8k7" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="4me-L5-Uw0"/>
+                <constraint firstAttribute="trailing" secondItem="Off-3d-qwz" secondAttribute="trailing" constant="15" id="5eg-Eo-0Qj"/>
+                <constraint firstItem="Off-3d-qwz" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="3" id="Goh-Vg-GWE"/>
+                <constraint firstItem="TC1-dK-Ka5" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="3" id="Q5p-bc-8er"/>
+                <constraint firstItem="TC1-dK-Ka5" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="5" id="TOA-ss-vcN"/>
+                <constraint firstItem="mfK-Q6-2IG" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="44" id="dLF-hy-OU7"/>
+                <constraint firstItem="Nlk-c7-8k7" firstAttribute="leading" secondItem="mfK-Q6-2IG" secondAttribute="trailing" constant="10" id="vCQ-1p-J2Y"/>
+                <constraint firstAttribute="trailing" secondItem="go3-1p-MRE" secondAttribute="trailing" id="vYu-90-E9j"/>
+                <constraint firstItem="go3-1p-MRE" firstAttribute="leading" secondItem="Nlk-c7-8k7" secondAttribute="trailing" id="yqA-4R-TON"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="aliasLabel" destination="mfK-Q6-2IG" id="UAQ-lo-syU"/>
+                <outlet property="bxhImg" destination="Off-3d-qwz" id="Trm-3S-OVv"/>
+                <outlet property="bxhView" destination="go3-1p-MRE" id="hwI-U2-dx5"/>
+                <outlet property="countryFlag" destination="TC1-dK-Ka5" id="JwG-JU-AHx"/>
+                <outlet property="pinButton" destination="1Qp-kX-c9q" id="222-SI-XdB"/>
+                <outlet property="pinImageView" destination="Com-2H-NTJ" id="Ncy-QF-M9S"/>
+                <outlet property="pinView" destination="Nlk-c7-8k7" id="Iab-X7-hyw"/>
+            </connections>
+            <point key="canvasLocation" x="196" y="107.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="France.png" width="235" height="154"/>
+        <image name="game-dudoan-Recovered_14.png" width="53" height="51"/>
+        <image name="ic_pin.png" width="53" height="51"/>
+    </resources>
+</document>

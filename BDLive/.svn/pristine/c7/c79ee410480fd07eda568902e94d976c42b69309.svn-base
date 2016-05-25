@@ -1,0 +1,293 @@
+/* 
+  Localizable.strings
+  BDLive
+
+  Created by Khanh Le on 4/13/15.
+  Copyright (c) 2015 Khanh Le. All rights reserved.
+*/
+
+
+"hdr-details.text" = "CHI TIẾT TRẬN ĐẤU";
+"hdr-bxh.text" = "BẢNG XẾP HẠNG";
+"hdr-nation.text" = "QUỐC GIA";
+"hdr-game.txt" = "GAME DỰ ĐOÁN";
+
+
+// livescore
+"menu-livescore.text" = "Live Score";
+"menu-league.text" = "Chọn giải đấu";
+"menu-favorite.text" = "Các trận quan tâm";
+"menu-ranking.text" = "Bảng xếp hạng";
+"menu-bet.text" = "Game dự đoán";
+"menu-expert-review.text" = "Nhận định chuyên gia";
+"menu-sys-review.text" = "Máy tính dự đoán";
+
+
+//account info
+"acc-info.text" = "Tài khoản";
+"acc-name.text" = "Tên tài khoản";
+"acc-star.text" = "Số sao";
+"acc-i-info.text" = "Thông tin";
+"acc-history.text" = "Lịch sử dự đoán";
+"acc-top-predictor.text" = "Top dự đoán";
+
+"acc-sign-up.text" = "Mở tài khoản";
+"acc-sign-in.text" = "Đăng nhập";
+"acc-fb-sign-in.text" = "Đăng nhập bằng Facebook";
+
+"acc-chat-room.text" = "Chat room";
+"acc-lang-stt.text" = "Ngôn ngữ";
+
+
+// alert message
+"alert-chat-room.text" = "Hãy đăng nhập để tham gia thảo luận và bình chọn!";
+"alert-load-data-error.text" = "Lỗi tải dữ liệu";
+"alert-network-error.text" = "Kiểm tra lại kết nối!";
+"alert-phone-existed-error.text" = "Số điện thoại đã được đăng ký.";
+
+
+// registration
+"acc-register.text" = "TẠO TÀI KHOẢN MỚI";
+"acc-register-phonenumber.text" = "Nhập số điện thoại của bạn";
+"acc-register-btn-continue.text" = "Tiếp tục";
+"acc-register-btn-finish.text" = "Hoàn tất";
+
+"acc-register-cbox-title.text" = "Xác nhận số điện thoại";
+"acc-register-cbox-body.text" = "Đây có phải số điện thoại của bạn không?";
+"acc-register-cbox-btn-edit.text" = "Thay đổi";
+"acc-register-cbox-inp-passwd.text" = "Nhập mật khẩu của bạn";
+
+"acc-register-cbox-succeed.text" = "Đăng ký thành công!";
+"acc-register-cbox-failed.text" = "Đăng ký không thành công!";
+"acc-register-btn-back.text" = "Quay lại";
+
+
+"acc-login-title.text" = "ĐĂNG NHẬP";
+"acc-login-phone-no.text" = "Số điện thoại";
+"acc-login-passwd.text" = "Mật khẩu";
+"acc-login-alert-title.text" = "Lỗi đăng nhập";
+"acc-login-alert-msg-error.text" = "Sai số điện thoại hoặc mật khẩu. Vui lòng thử lại!";
+"acc-login-alert-btn-retry.text" = "Thử lại";
+
+
+//game
+"game-forbiden.txt" = "Bạn phải đăng nhập để sử dụng chức năng này.";
+"game-NS.txt" = "Nhập sao";
+"game-DD.txt" = "Đã đặt";
+
+//game alert
+"game-alert-success.txt" = "Chúc mừng bạn đặt cược thành công";
+"game-alert-authen.txt" = "Bạn chưa đăng nhập, vui lòng đăng nhập để đặt cược";
+"game-alert-balance.txt" = "Tài khoản không đủ để đặt cược, vui lòng nạp thẻ";
+"game-alert-sys.txt" = "Hệ thống quá tải, xin vui lòng trở lại sau";
+"game-alert-failed.txt" = "Đặt cược không thành công";
+"game-alert-require-100.txt" = "Bạn phải đặt tối thiểu 100 sao trở lên.";
+
+
+
+//button
+"btn-decline.txt" = "Huỷ";
+"btn-sign-in.txt" = "Đăng nhập";
+
+"btn-proceed.txt" = "Đặt";
+"btn-confirm.txt" = "Xác nhận";
+"btn-balance.txt" = "Số dư";
+"btn-select.txt" = "Đặt";
+
+"btn-passwd-change.txt" = "Đổi mật khẩu";
+"btn-name-change.txt" = "Đổi tên hiển thị";
+
+"change_display_name_dialog_msg" = "Xin mời nhập tên hiển thị mới:";
+"change_display_name_dialog_title" = "Đổi tên hiển thị";
+
+"change_display_name_alert_ok" = "Chúc mừng bạn đã đổi tên thành công!";
+"change_display_name_alert_failed" = "Đổi tên không thành công. Vui lòng thử lại!";
+"change_display_name_alert_title_failed" = "Lỗi xảy ra";
+
+
+
+/// account localize text
+"acc-info-ttdd" = "Thông tin dự đoán";
+"acc-info-sldd" = "Số lần dự đoán";
+"acc-info-slddt" = "Số lần dự đoán thắng";
+"acc-info-slddb" = "Số lần dự đoán thua";
+"acc-info-sldd-cho" = "Số dự đoán chờ kết quả";
+"acc-info-sao-thang" = "Sao đã thắng";
+"acc-info-sao-thua" = "Sao đã thua";
+"acc-personal" = "Thông tin cá nhân";
+"acc-ten-hien-thi" = "Tên đăng nhập";
+"acc-gender" = "Giới tính";
+"acc-birthday" = "Ngày sinh";
+"acc-mobile-phone" = "Di động";
+
+"acc-ls-stt" = "Stt";
+"acc-ls-date" = "Ngày";
+"acc-ls-match" = "Trận";
+"acc-ls-ret" = "Kết quả";
+
+"acc-ls-detail-box-title" = "Chi tiết";
+"acc-ls-detail-box-date" = "Ngày cược";
+"acc-ls-detail-box-date-thoigianthidau" = "Trận đấu";
+"acc-ls-detail-box-match" = "Trận";
+"acc-ls-detail-box-tyso" = "Tỷ số";
+"acc-ls-detail-box-keo" = "Kèo";
+"acc-ls-detail-box-select" = "Chọn";
+"acc-ls-detail-box-dat" = "Đặt";
+"acc-ls-detail-box-recv" = "Nhận";
+"acc-ls-detail-box-result" = "Kết quả";
+
+"acc-ls-detail-box-abbr-win" = "Thắng";
+"acc-ls-detail-box-abbr-draw" = "Hoà";
+"acc-ls-detail-box-abbr-lost" = "Thua";
+"acc-ls-detail-box-abbr-pending" = "Chờ";
+"acc-ls-detail-box-abbr-huy" = "Huỷ";
+"acc-ls-detail-box-abbr-UO" = "Tài - Xỉu";
+
+// change password
+"acc-cpasswd-sdt" = "Số điện thoại";
+"acc-cpasswd-mkht" = "Mật khẩu hiện tại";
+"acc-cpasswd-mkm" = "Mật khẩu mới";
+"acc-cpasswd-nlmk" = "Nhập lại mật khẩu";
+"acc-cpasswd-btn-ht" = "Hoàn tất";
+"acc-cpasswd-hdr-title" = "THAY ĐỔI MẬT KHẨU";
+
+
+"acc-top-ct" = "Top cao thủ";
+"acc-top-money" = "Top đại gia";
+
+
+// phong do
+"pf-hdr-title-computer-pick" = "MÁY TÍNH DỰ ĐOÁN";
+"pf-hdr-title" = "PHONG ĐỘ";
+"pf-hdr-sannha" = "Sân nhà";
+"pf-hdr-sankhach" = "Sân khách";
+"pf-hdr-ban" = "bàn";
+"pf-hdr-tran" = "trận";
+"pf-hdr-tancong" = "Tấn công";
+"pf-hdr-phongthu" = "Phòng thủ";
+
+"pf-last5m" = "Kết quả 5 trận gần nhất";
+"pf-section1-title" = "Bảng xếp hạng của 2 đội";
+
+"pf-section2-title" = "Phong độ tính trên %@ trận gần nhất";
+"pf-section2-content-r1" = "Số trận ghi bàn";
+"pf-section2-content-r2" = "Tỉ lệ ghi bàn trung bình";
+"pf-section2-content-r3" = "Số trận không ghi bàn";
+"pf-section2-content-r4" = "Số trận sạch lưới";
+"pf-section2-content-r5" = "Số trận lọt lưới";
+"pf-section2-content-r6" = "Tỉ lệ lọt lưới trung bình";
+
+"pf-section3-title" = "Khả năng tấn công / phòng thủ %@ trận gần nhất";
+"pf-section3-content-r1" = "Tỉ lệ ghi bàn trung bình";
+"pf-section3-content-r2" = "Số trận không ghi bàn";
+"pf-section3-content-r3" = "Số trận ghi bàn";
+"pf-section3-content-r4" = "Bàn thắng/Bàn thua";
+"pf-section3-content-r5" = "Tỉ lệ lọt lưới trung bình";
+"pf-section3-content-r6" = "Số trận không lọt lưới";
+"pf-section3-content-r7" = "Số trận lọt lưới";
+"pf-section3-content-r8" = "Bàn thua/Bàn thắng";
+
+"pf-hdr-final-title" = "DỰ ĐOÁN TỶ SỐ CHUNG CUỘC";
+"pf-hdr-final-msg-predict" = "Số bàn có thể ghi";
+"pf-hdr-power-title" = "SỨC MẠNH";
+
+"pf-asia-rate" = "Châu Á";
+
+
+
+"hdr-goc-details-info.text" = "Góc:";
+"hdr-poss-details-info.text" = "Sở hữu bóng:";
+
+"pf-tai-txt" = "Tài";
+"pf-xiu-txt" = "Xỉu";
+
+
+"game-tai-txt" = "Tài";
+"game-xiu-txt" = "Xỉu";
+
+
+"livescore-post-txt" = "Hoãn";
+
+
+"md-chi-tiet.text" = "Chi tiết";
+"md-doi-hinh.text" = "Đội hình";
+"md-thong-ke.text" = "Thống kê";
+
+
+
+"md-stats-poss.text" = "Tỉ lệ kiểm soát bóng";
+"md-stats-corner.text" = "Phạt góc";
+"md-stats-shoot.text" = "Số cú sút";
+"md-stats-shoot-on-target.text" = "Số cú sút trúng đích";
+"md-stats-shoot-off.text" = "Sút phạt";
+"md-stats-fouls.text" = "Phạm lỗi";
+"md-stats-yellow-cards.text" = "Thẻ vàng";
+"md-stats-red-cards.text" = "Thẻ đỏ";
+"md-stats-off-side.text" = "Việt vị";
+"md-stats-throw-in.text" = "Ném biên";
+"md-comment.text" = "Thảo luận";
+
+"CommentBoxView-comment.text" = "Ý kiến";
+"CommentBoxView-send-btn.text" = "Gửi";
+
+
+
+"game-filter-all-txt" = "Tất cả";
+"game-filter-next-txt" = "Sắp đá";
+"game-filter-live-txt" = "Đang đá";
+"game-filter-ft-txt" = "Đá xong";
+
+"game-filter-filter-txt" = "Lọc trận đấu theo trạng thái";
+
+"game-match-ft.txt" = "Trận đấu đã kết thúc.";
+
+
+
+
+"title_lineup1.txt" = "Đội hình dự bị";
+"title_lineup2.txt" = "Huấn luyện viên";
+"title_lineup3.txt" = "Trọng tài";
+
+
+"Announcement-Title.txt" = "Thông báo";
+
+
+"lich-homnay.txt" = "Hôm nay";
+
+
+"acc-reward-stt.text" = "Chuyển khoản";
+"acc-transfer-stt.text" = "Fanpage Facebook";
+
+"acc-reward-receiver-stt.text" = "ID người nhận";
+"acc-reward-amount-stt.text" = "Số sao";
+
+
+
+"alert-transfer-money-not-existed.text" = "Tài khoản người nhận không tồn tại.";
+"alert-transfer-money-not-positive.text" = "Số sao chuyển phải lớn hơn 0.";
+"alert-transfer-money-balance.text" = "Tài khoản của bạn không đủ.";
+"alert-transfer-money-success.text" = "Chuyển khoản thành công.";
+
+
+"alert-transfer-money-unit.text" = "Mỗi lần chuyển không vượt quá 5M ☆";
+"alert-transfer-money-balance-over1.text" = "Tài khoản của bạn phải lớn hơn 1M ☆";
+"alert-transfer-money-no-prediction.text" = "Số trận dự đoán phải lớn hơn 50 trận";
+
+"iap-napsao.text" = "Nạp Sao";
+
+"iap-alert-transaction-failed-title.text" = "Giao dịch thất bại.";
+"iap-alert-transaction-failed-msg.text" = "Error occured";
+
+"iap-alert-iBalance" = "Số sao hiện tại %@";
+
+
+"bCup-group-round-txt" = "Vòng bảng";
+"bCup-knockout-round-txt" = "Vòng 1/16";
+"bCup-quater-round-txt" = "Tứ kết";
+"bCup-semi-round-txt" = "Bán kết";
+"bCup-final-round-txt" = "Chung kết";
+
+// video ads
+"video_ads_title" = "Xem video để nhận ☆";
+"video_ads_hint" = "Bạn có 5 lần xem video để nhận sao mỗi ngày. Mỗi lần xem video bạn được thưởng 500,000 ☆";
+"video_ads_watch_now" = "Xem ngay!";

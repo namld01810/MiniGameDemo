@@ -1,0 +1,289 @@
+/* 
+  Localizable.strings
+  BDLive
+
+  Created by Khanh Le on 4/13/15.
+  Copyright (c) 2015 Khanh Le. All rights reserved.
+*/
+
+
+"hdr-details.text" = "MATCH DETAILS";
+"hdr-bxh.text" = "TABLES";
+"hdr-nation.text" = "NATIONS";
+"hdr-game.txt" = "GAME";
+
+
+// livescore
+"menu-livescore.text" = "Live Score";
+"menu-league.text" = "Leagues by nation";
+"menu-favorite.text" = "Favourite matches";
+"menu-ranking.text" = "League tables";
+"menu-bet.text" = "Game";
+"menu-expert-review.text" = "Expert pick";
+"menu-sys-review.text" = "Computer pick";
+
+//account info
+"acc-info.text" = "Account";
+"acc-name.text" = "Account name";
+"acc-star.text" = "Balance";
+"acc-i-info.text" = "Info";
+"acc-history.text" = "Bet history";
+"acc-top-predictor.text" = "Best tipster";
+
+"acc-sign-up.text" = "Sign up";
+"acc-sign-in.text" = "Sign in";
+"acc-fb-sign-in.text" = "Facebook Login";
+
+"acc-chat-room.text" = "Chat room";
+"acc-lang-stt.text" = "Language";
+//"acc-lang-stt.text" = "Ngôn ngữ: Tiếng Việt";
+
+// alert message
+"alert-chat-room.text" = "Please sign in to vote and bet!";
+"alert-load-data-error.text" = "Could not connect to server.";
+"alert-network-error.text" = "Check your network!";
+"alert-phone-existed-error.text" = "Phone number existed!";
+"acc-register.text" = "REGISTRATION";
+"acc-register-phonenumber.text" = "Enter your phone number";
+"acc-register-btn-continue.text" = "Continue";
+"acc-register-btn-finish.text" = "Finish";
+"acc-register-cbox-title.text" = "Confirm your phone";
+"acc-register-cbox-body.text" = "Is it your phone number?";
+"acc-register-cbox-btn-edit.text" = "Edit";
+"acc-register-cbox-inp-passwd.text" = "Enter your password";
+
+"acc-register-cbox-succeed.text" = "Registration successful!";
+"acc-register-cbox-failed.text" = "Registration unsuccessful!";
+"acc-register-btn-back.text" = "Back";
+
+"acc-login-title.text" = "SIGN IN";
+"acc-login-phone-no.text" = "Phone number";
+"acc-login-passwd.text" = "Password";
+"acc-login-alert-title.text" = "Login error";
+"acc-login-alert-msg-error.text" = "Wrong phone number or password. Please try again!";
+"acc-login-alert-btn-retry.text" = "Retry";
+
+
+
+//game
+"game-forbiden.txt" = "Please sign in first!";
+"game-NS.txt" = "Place order";
+"game-DD.txt" = "Amount";
+
+"game-alert-success.txt" = "Order accepted!";
+"game-alert-authen.txt" = "You're not sign in, please sign in first";
+"game-alert-balance.txt" = "Your balance is not enough";
+"game-alert-sys.txt" = "System is overload, please try again later";
+"game-alert-failed.txt" = "Order failed";
+"game-alert-require-100.txt" = "Required at least 100 stars for each order.";
+
+
+
+//button
+"btn-decline.txt" = "Cancel";
+"btn-sign-in.txt" = "Sign in";
+"btn-proceed.txt" = "Proceed";
+"btn-confirm.txt" = "Confirm";
+"btn-balance.txt" = "Balance";
+"btn-select.txt" = "Pick";
+"btn-passwd-change.txt" = "Change password";
+"btn-name-change.txt" = "Change name";
+
+
+"change_display_name_dialog_msg" = "Enter new name:";
+"change_display_name_dialog_title" = "Change display name";
+
+
+"change_display_name_alert_ok" = "Change name successfully!";
+"change_display_name_alert_failed" = "Failed to change name, please try again!";
+"change_display_name_alert_title_failed" = "Error";
+
+
+/// account localize text
+"acc-info-ttdd" = "Prediction summary";
+"acc-info-sldd" = "No. of prediction";
+"acc-info-slddt" = "Win";
+"acc-info-slddb" = "Lost";
+"acc-info-sldd-cho" = "Pending";
+"acc-info-sao-thang" = "Win amount";
+"acc-info-sao-thua" = "Lost amount";
+"acc-personal" = "Acc. Info";
+"acc-ten-hien-thi" = "Username";
+"acc-gender" = "Gender";
+"acc-birthday" = "Birthday";
+"acc-mobile-phone" = "Handphone";
+
+"acc-ls-stt" = "No.";
+"acc-ls-date" = "Date";
+"acc-ls-match" = "Match";
+"acc-ls-ret" = "Result";
+
+"acc-ls-detail-box-title" = "Order details";
+"acc-ls-detail-box-date" = "Date ordered";
+"acc-ls-detail-box-date-thoigianthidau" = "Kick-off Date";
+"acc-ls-detail-box-match" = "Match";
+"acc-ls-detail-box-tyso" = "Score";
+"acc-ls-detail-box-keo" = "Handicap";
+"acc-ls-detail-box-select" = "Picked";
+"acc-ls-detail-box-dat" = "Stake";
+"acc-ls-detail-box-recv" = "Return";
+"acc-ls-detail-box-result" = "Result";
+
+"acc-ls-detail-box-abbr-win" = "Win";
+"acc-ls-detail-box-abbr-draw" = "Draw";
+"acc-ls-detail-box-abbr-lost" = "Lost";
+"acc-ls-detail-box-abbr-pending" = "Pending";
+"acc-ls-detail-box-abbr-huy" = "Post.";
+"acc-ls-detail-box-abbr-UO" = "Under - Over";
+
+
+
+
+"acc-top-ct" = "Top winner";
+"acc-top-money" = "Big boy";
+
+
+// phong do
+"pf-hdr-title-computer-pick" = "TIPS BY COMPUTER";
+"pf-hdr-title" = "PERFORMANCE";
+"pf-hdr-sannha" = "Home";
+"pf-hdr-sankhach" = "Away";
+"pf-hdr-ban" = "goal";
+"pf-hdr-tran" = "match";
+"pf-hdr-tancong" = "Attack";
+"pf-hdr-phongthu" = "Defense";
+
+"pf-last5m" = "Last 5 matches";
+"pf-section1-title" = "Table";
+
+"pf-section2-title" = "Performance on last %@ matches";
+"pf-section2-content-r1" = "Scored matches";
+"pf-section2-content-r2" = "Average scored";
+"pf-section2-content-r3" = "None scored matches";
+"pf-section2-content-r4" = "Clean sheet matches";
+"pf-section2-content-r5" = "Conceded matches";
+"pf-section2-content-r6" = "Average conceded matches";
+
+"pf-section3-title" = "Attack/Defense on last %@ matches";
+"pf-section3-content-r1" = "Average scored";
+"pf-section3-content-r2" = "None scored matches";
+"pf-section3-content-r3" = "Scored matches";
+"pf-section3-content-r4" = "Scored/Conceded";
+"pf-section3-content-r5" = "Average conceded";
+"pf-section3-content-r6" = "Clean sheet matches";
+"pf-section3-content-r7" = "Conceded matches";
+"pf-section3-content-r8" = "Conceded/Scored";
+
+"pf-hdr-final-title" = "FINAL PREDICTION";
+"pf-hdr-final-msg-predict" = "Scored estimation";
+
+"pf-hdr-power-title" = "OVERALL";
+
+"pf-asia-rate" = "Handicap";
+
+"hdr-goc-details-info.text" = "Corners:";
+"hdr-poss-details-info.text" = "Possession:";
+
+
+// change password
+"acc-cpasswd-sdt" = "Phone number";
+"acc-cpasswd-mkht" = "Old password";
+"acc-cpasswd-mkm" = "New password";
+"acc-cpasswd-nlmk" = "Re-type new password";
+"acc-cpasswd-btn-ht" = "Finish";
+"acc-cpasswd-hdr-title" = "PASSWORD CHANGE";
+
+
+"pf-tai-txt" = "Over";
+"pf-xiu-txt" = "Under";
+
+"game-tai-txt" = "O";
+"game-xiu-txt" = "U";
+
+
+"livescore-post-txt" = "Postp.";
+
+
+"md-chi-tiet.text" = "Details";
+"md-doi-hinh.text" = "Line-Ups";
+"md-thong-ke.text" = "Stats";
+
+"md-stats-poss.text" = "Possession";
+"md-stats-corner.text" = "Corner kicks";
+"md-stats-shoot.text" = "Shots";
+"md-stats-shoot-on-target.text" = "Shots on target";
+"md-stats-shoot-off.text" = "Goal kicks";
+"md-stats-fouls.text" = "Fouls";
+"md-stats-yellow-cards.text" = "Yellow cards";
+"md-stats-red-cards.text" = "Red cards";
+"md-stats-off-side.text" = "Offsides";
+"md-stats-throw-in.text" = "Throw-in";
+"md-comment.text" = "Comment";
+
+"CommentBoxView-comment.text" = "Comment";
+"CommentBoxView-send-btn.text" = "Send";
+
+
+"game-filter-all-txt" = "All";
+"game-filter-next-txt" = "Next";
+"game-filter-live-txt" = "Live";
+"game-filter-ft-txt" = "FT";
+
+"game-filter-filter-txt" = "Filter";
+
+"game-match-ft.txt" = "The match was finished.";
+
+
+
+
+"title_lineup1.txt" = "Substitutions";
+"title_lineup2.txt" = "Coach";
+"title_lineup3.txt" = "Referee";
+"Announcement-Title.txt" = "Announcement";
+
+
+"lich-homnay.txt" = "Today";
+
+
+"acc-reward-stt.text" = "Transfer";
+"acc-transfer-stt.text" = "Fanpage Facebook";
+
+
+"acc-reward-receiver-stt.text" = "Receiver ID";
+"acc-reward-amount-stt.text" = "Amount";
+
+
+
+
+
+"alert-transfer-money-not-existed.text" = "Receiver ID is not existed.";
+"alert-transfer-money-not-positive.text" = "Amount is not positive number.";
+"alert-transfer-money-balance.text" = "Your balance is not enough.";
+"alert-transfer-money-success.text" = "Transfered successfully.";
+
+
+"alert-transfer-money-unit.text" = "Transfer unit is not over 5M ☆";
+"alert-transfer-money-balance-over1.text" = "Your balance must be over 1M ☆";
+"alert-transfer-money-no-prediction.text" = "No. of Prediction must be over 50";
+
+
+"iap-napsao.text" = "Purchase Item";
+
+
+"iap-alert-transaction-failed-title.text" = "Transaction Failed.";
+"iap-alert-transaction-failed-msg.text" = "Error occured";
+
+"iap-alert-iBalance" = "Current balance is %@";
+
+
+
+"bCup-group-round-txt" = "Group";
+"bCup-knockout-round-txt" = "Knockout";
+"bCup-quater-round-txt" = "Quater final";
+"bCup-semi-round-txt" = "Semi final";
+"bCup-final-round-txt" = "Final";
+
+// video ads
+"video_ads_title" = "Watch videos to get ☆";
+"video_ads_hint" = "You have 5 times to watch videos to get ☆ everyday. Each time you watch video you will be awarded 500,000 ☆";
+"video_ads_watch_now" = "Watch now!";
